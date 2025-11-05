@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join our fitness community - Register or Login">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fitness Nirvana - Join the Movement</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff4d4d;
+            --secondary-color: #1a1a1a;
+            --accent-color: #ffd700;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --background-dark: #000000;
+            --background-light: #333333;
+            --error-color: #ff4d4d;
+            --success-color: #00ff00;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background-dark);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(45deg, #000000, #1a1a1a, #000000);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        .container {
+            background: rgba(26, 26, 26, 0.95);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            border: 1px solid rgba(255, 77, 77, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--background-dark);
+            border: 2px solid var(--background-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.2);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            transition: var(--transition);
+            pointer-events: none;
+            font-size: 0.9rem;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            transform: translateY(-130%) scale(0.8);
+            color: var(--primary-color);
+            left: 0.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: #ff6666;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .or {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .or::before,
+        .or::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--background-light);
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            background: var(--background-dark);
+            border: 2px solid var(--background-light);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .links p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .links button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+
+        .links button:hover {
+            color: #ff6666;
+        }
+
+        .recover {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        .recover a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .recover a:hover {
+            color: var(--primary-color);
+        }
+
+        .messageDiv {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .messageDiv.error {
+            background: rgba(255, 77, 77, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+
+        .messageDiv.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        /* Fitness-specific elements */
+        .fitness-motivation {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .benefits-list {
+            margin: 1rem 0;
+            padding: 0 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .benefits-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefits-list i {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .form-title {
+                font-size: 1.75rem;
+            }
+
+            .input-group input {
+                padding: 0.875rem 1rem 0.875rem 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- Sign Up Form -->
+        <div class="container" id="signup" style="display:none;" role="region" aria-label="Registration form">
+            <h1 class="form-title">Join FitClub</h1>
+            <p class="fitness-motivation">Transform Your Life Today!</p>
+            <form method="post" action="" novalidate>
+                <div id="signUpMessage" class="messageDiv" role="alert" style="display:none;"></div>
+                <div class="input-group">
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <input type="text" id="fName" placeholder=" " required 
+                           pattern="[A-Za-z]+" minlength="2" maxlength="50"
+                           aria-label="First Name">
+                    <label for="fName">First Name</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <input type="text" id="lName" placeholder=" " required
+                           pattern="[A-Za-z]+" minlength="2" maxlength="50"
+                           aria-label="Last Name">
+                    <label for="lName">Last Name</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <input type="email" id="rEmail" placeholder=" " required
+                           autocomplete="email"
+                           aria-label="Email address">
+                    <label for="rEmail">Email</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <input type="password" id="rPassword" placeholder=" " required
+                           minlength="8"
+                           aria-label="Password"
+                           autocomplete="new-password">
+                    <label for="rPassword">Password</label>
+                </div>
+                <ul class="benefits-list">
+                    <li><i class="fas fa-check"></i> Access to premium workout plans</li>
+                    <li><i class="fas fa-check"></i> Personal trainer consultation</li>
+                    <li><i class="fas fa-check"></i> Nutrition guidance</li>
+                </ul>
+                <button type="submit" class="btn" id="submitSignUp">Start Your Journey</button>
+            </form>
+            <p class="or">or join with</p>
+            <div class="icons" role="group" aria-label="Social login options">
+                <button class="social-btn" aria-label="Sign up with Google">
+                    <i class="fab fa-google" aria-hidden="true"></i>
+                </button>
+                <button class="social-btn" aria-label="Sign up with Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="links">
+                <p>Already a member?</p>
+                <button id="signInButton" type="button">Sign In</button>
+            </div>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="container" id="signIn" role="region" aria-label="Login form">
+            <h1 class="form-title">Welcome Back</h1>
+            <p class="fitness-motivation">Ready for Another Great Workout?</p>
+            <form method="post" action="" novalidate>
+                <div id="signInMessage" class="messageDiv" role="alert" style="display:none;"></div>
+                <div class="input-group">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <input type="email" id="email" placeholder=" " required
+                           autocomplete="email"
+                           aria-label="Email address">
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <input type="password" id="password" placeholder=" " required
+                           aria-label="Password"
+                           autocomplete="current-password">
+                    <label for="password">Password</label>
+                </div>
+                <p class="recover">
+                    <a href="#" id="forgotPassword">Forgot Password?</a>
+                </p>
+                <button type="submit" class="btn" id="submitSignIn">Let's Train</button>
+            </form>
+            <p class="or">or continue with</p>
+            <div class="icons" role="group" aria-label="Social login options">
+                <button class="social-btn" aria-label="Sign in with Google">
+                    <i class="fab fa-google" aria-hidden="true"></i>
+                </button>
+                <button class="social-btn" aria-label="Sign in with Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="links">
+                <p>New to FitClub?</p>
+                <button id="signUpButton" type="button">Join Now</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module" src="firebaseauth.js"></script>
+    <script src="scriptbackend.js"></script>
+</body>
+</html>

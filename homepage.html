@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitClub - Your Fitness Journey Starts Here</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-color: #ff4d4d;
+            --secondary-color: #1a1a1a;
+            --accent-color: #ffd700;
+            --text-color: #333;
+            --background-dark: #000000;
+            --background-light: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        }
+
+        /* Header Section */
+        .header {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            color: white;
+        }
+
+        .user-info span {
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #ff6666;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: url('/api/placeholder/1920/1080') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Membership Plans */
+        .plans {
+            padding: 5rem 2rem;
+            background: var(--background-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .plan-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features li {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .subscribe-btn {
+            padding: 0.8rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .subscribe-btn:hover {
+            background: #ff6666;
+            transform: translateY(-2px);
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background: #ddd;
+        }
+
+        .reviewer-info h4 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .stars {
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+        }
+
+        .review-text {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Add Review Form */
+        .add-review {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-review h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .review-form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-review-btn {
+            padding: 0.8rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .submit-review-btn:hover {
+            background: #ff6666;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .user-info {
+                gap: 1rem;
+            }
+            .hero {
+    /* Replace 'your-image-url.jpg' with the actual path to your uploaded image */
+    background-image: url('your-image-url.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* This makes the hero section full viewport height */
+    position: relative;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white; /* Makes text white for better visibility on dark images */
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds shadow for better readability */
+}
+
+.hero p {
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="user-info">
+            <span id="loggedUserFName"></span>
+            <span id="loggedUserEmail"></span>
+        </div>
+        <a href="signup.html" class="logout-btn">Logout</a>
+    </header>
+
+   <!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to FitClub</h1>
+        <p>Transform Your Body, Transform Your Life</p>
+    </div>
+</section>
+
+    <!-- Membership Plans -->
+    <section class="plans">
+        <h2 class="section-title">Membership Plans</h2>
+        <div class="plans-container">
+            <div class="plan-card">
+                <h3>Basic Plan</h3>
+                <div class="price">$29/mo</div>
+                <ul class="features">
+                    <li>Access to Gym Equipment</li>
+                    <li>Basic Workout Plans</li>
+                    <li>Locker Room Access</li>
+                    <li>24/7 Access</li>
+                </ul>
+                <button class="subscribe-btn">Get Started</button>
+            </div>
+
+            <div class="plan-card">
+                <h3>Premium Plan</h3>
+                <div class="price">$49/mo</div>
+                <ul class="features">
+                    <li>All Basic Plan Features</li>
+                    <li>Personal Trainer (2x/month)</li>
+                    <li>Group Classes</li>
+                    <li>Nutrition Consultation</li>
+                </ul>
+                <button class="subscribe-btn">Get Premium</button>
+            </div>
+
+            <div class="plan-card">
+                <h3>Elite Plan</h3>
+                <div class="price">$89/mo</div>
+                <ul class="features">
+                    <li>All Premium Plan Features</li>
+                    <li>Unlimited Personal Training</li>
+                    <li>Massage Therapy</li>
+                    <li>Private Locker</li>
+                </ul>
+                <button class="subscribe-btn">Go Elite</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews">
+        <h2 class="section-title">Member Reviews</h2>
+        <div class="reviews-container">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-image"></div>
+                    <div class="reviewer-info">
+                        <h4>John Doe</h4>
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Amazing facilities and supportive trainers. Lost 20 pounds in 3 months!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-image"></div>
+                    <div class="reviewer-info">
+                        <h4>Jane Smith</h4>
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"The personal training sessions are worth every penny. Best gym experience ever!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-image"></div>
+                    <div class="reviewer-info">
+                        <h4>Mike Johnson</h4>
+                        <div class="stars">
+                            ★★★★☆
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Great community and modern equipment. Highly recommend the group classes!"</p>
+            </div>
+        </div>
+
+        <!-- Add Review Form -->
+        <div class="add-review">
+            <h3>Share Your Experience</h3>
+            <form class="review-form">
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select id="rating" required>
+                        <option value="5">★★★★★</option>
+                        <option value="4">★★★★☆</option>
+                        <option value="3">★★★☆☆</option>
+                        <option value="2">★★☆☆☆</option>
+                        <option value="1">★☆☆☆☆</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="review">Your Review</label>
+                    <textarea id="review" required placeholder="Share your experience with us..."></textarea>
+                </div>
+                <button type="submit" class="submit-review-btn">Submit Review</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script type="module" src="./homepage.js"></script>
+</body>
+</html>
